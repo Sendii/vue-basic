@@ -58,9 +58,10 @@
 				<button @click="changeBilangan('reset')">Reset</button>
 			</div>
 			<div style="margin-top: 20px;">
-				<a :class="{active: menu == 'home'}" href="#" @click="changeMenu('home', $event)">Home</a>
-				<a :class="{active: menu == 'about'}" href="#" @click="changeMenu('about', $event)">About</a>
-				<a :class="{active: menu == 'blog'}" href="#" @click="changeMenu('blog', $event)">Blog</a>
+				<!-- .prevent menggantikan event.preventDefault() di javascript -->
+				<a :class="{active: menu == 'home'}" href="#" @click.prevent="changeMenu('home')">Home</a>
+				<a :class="{active: menu == 'about'}" href="#" @click.prevent="changeMenu('about')">About</a>
+				<a :class="{active: menu == 'blog'}" href="#" @click.prevent="changeMenu('blog')">Blog</a>
 				<h2 v-text="bilangan + cekBilangan"></h2>
 			</div>
 			<!-- <h4 v-text="bilangan % 2 == 0 ? 'Genap' : 'Ganjil'"></h4> -->
@@ -112,9 +113,7 @@
 				changeBilangan: function(inf){
 					return (inf == '+' ? this.bilangan++ : inf == '-' ? this.bilangan-- : this.bilangan = 1)
 				},
-				changeMenu: function(page, e){
-					e.preventDefault()
-					console.log(e)
+				changeMenu: function(page){
 					this.menu = page
 				},
 				// checkNumber: function(numb){
