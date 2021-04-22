@@ -58,9 +58,9 @@
 				<button @click="changeBilangan('reset')">Reset</button>
 			</div>
 			<div style="margin-top: 20px;">
-				<button :class="{active: menu == 'home'}" @click="changeClass('home')">Home</button>
-				<button :class="{active: menu == 'about'}" @click="changeClass('about')">About</button>
-				<button :class="{active: menu == 'blog'}" @click="changeClass('blog')">Blog</button>
+				<a :class="{active: menu == 'home'}" href="#" @click="changeMenu('home', $event)">Home</a>
+				<a :class="{active: menu == 'about'}" href="#" @click="changeMenu('about', $event)">About</a>
+				<a :class="{active: menu == 'blog'}" href="#" @click="changeMenu('blog', $event)">Blog</a>
 				<h2 v-text="bilangan + cekBilangan"></h2>
 			</div>
 			<!-- <h4 v-text="bilangan % 2 == 0 ? 'Genap' : 'Ganjil'"></h4> -->
@@ -112,8 +112,10 @@
 				changeBilangan: function(inf){
 					return (inf == '+' ? this.bilangan++ : inf == '-' ? this.bilangan-- : this.bilangan = 1)
 				},
-				changeClass: function(page){
-					(page == 'home' ? this.menu = 'home' : (page == 'about' ? this.menu = 'about' : (page == 'blog' ? this.menu = 'blog' : '') ))
+				changeMenu: function(page, e){
+					e.preventDefault()
+					console.log(e)
+					this.menu = page
 				},
 				// checkNumber: function(numb){
 				// 	return `bilangan ${numb} adalah  ${numb % 2 === 0 ? 'Genap' : 'Ganjil'}`
