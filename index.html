@@ -33,6 +33,11 @@
 				<!-- melooping data array dan memunculkannya -->
 				<li v-for="(k, index) of kelas">{{`${k} ${index+1}`}}</li>
 			</ul>
+			<p>Mencari bilangan 1 - 10 yang genap dan ganjil</p>
+			<ul>
+				<!-- <li v-for="x of numbers">{{checkNumber(x)}}</li> -->
+				<li v-for="genap of cekBilanganGenap(numbers)" v-text="genap"></li>
+			</ul>
 			<h1 v-html="link"></h1>
 			<!-- v-on:nama events
 			untuk melakukan event perlu menambahkan v-on:name events atau bisa disingkat dengan @namaevent -->
@@ -68,7 +73,8 @@
 				link: '<a href="google.com">ini link</a>',
 				gambar: 'images/vue2.png',
 				menu: 'home',
-				kelas: []
+				kelas: [],
+				numbers: [1,2,3,4,5,6,7,8,9,10]
 			},
 			methods: {
 				getName: function(){
@@ -83,6 +89,14 @@
 				},
 				changeClass: function(page){
 					(page == 'home' ? this.menu = 'home' : (page == 'about' ? this.menu = 'about' : (page == 'blog' ? this.menu = 'blog' : '') ))
+				},
+				// checkNumber: function(numb){
+				// 	return `bilangan ${numb} adalah  ${numb % 2 === 0 ? 'Genap' : 'Ganjil'}`
+				// }
+				cekBilanganGenap: function(data){
+					return data.filter(angka => {
+						return angka % 2 == 0
+					})
 				}
 			},
 			computed: {
