@@ -19,7 +19,20 @@
 		<header>
 			<!-- v-bind:attribute html
 			di attribute html tidak bisa mengakses data model langsung, perlu memakai v-bind atau :attribute -->
-			<img style="height: 200px;border-radius: 10px;" :src="gambar" alt="gambar">
+			<img style="height: 200px;border-radius: 10px;display: block;margin-bottom: 20px;" :src="gambar" alt="gambar">
+			<h5 v-text="name"></h5>
+			<input type="text" v-model="name">
+			<div>
+				<input type="checkbox" value="React" v-model="kelas">React
+				<input type="checkbox" value="Vue" v-model="kelas">Vue
+				<input type="checkbox" value="Angular" v-model="kelas">Angular
+			</div>
+			<p>Pilihan anda adalah : </p>
+			<p v-text=kelas></p>
+			<ul>
+				<!-- melooping data array dan memunculkannya -->
+				<li v-for="k of kelas" v-text="k"></li>
+			</ul>
 			<h1 v-html="link"></h1>
 			<!-- v-on:nama events
 			untuk melakukan event perlu menambahkan v-on:name events atau bisa disingkat dengan @namaevent -->
@@ -54,7 +67,8 @@
 				bilangan: 1,
 				link: '<a href="google.com">ini link</a>',
 				gambar: 'images/vue2.png',
-				menu: 'home'
+				menu: 'home',
+				kelas: []
 			},
 			methods: {
 				getName: function(){
