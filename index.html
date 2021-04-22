@@ -27,13 +27,23 @@
 				<input type="checkbox" value="Vue" v-model="kelas">Vue
 				<input type="checkbox" value="Angular" v-model="kelas">Angular
 			</div>
-			<ul v-if="kelas.length > 0">
-				<!-- melooping data array dan memunculkannya -->
-				<li v-for="(k, index) of kelas">{{`${k} ${index+1}`}}</li>
-			</ul>
+			<template v-if="kelas.length > 0">
+				<ul>
+					<!-- melooping data array dan memunculkannya -->
+					<li v-for="(k, index) of kelas">{{`${k} ${index+1}`}}</li>
+				</ul>				
+			</template>
 			<p v-else>
 				<b>Kelas belum dipilih</b>
 			</p>
+			<ul>
+				<!-- access object in array -->
+				<li v-for="(item, i) of items" :key="i" v-text="item.name"></li>
+			</ul>
+			<ul>
+				<!-- access single object -->
+				<li v-for="(obj, keyname, index) of object" :key="keyname">{{`${index+1}: ${keyname} - ${obj}`}}</li>
+			</ul>
 			<p>Mencari bilangan 1 - 10 yang genap dan ganjil</p>
 			<ul>
 				<!-- <li v-for="x of numbers">{{checkNumber(x)}}</li> -->
@@ -74,8 +84,22 @@
 				link: '<a href="google.com">ini link</a>',
 				gambar: 'images/vue2.png',
 				menu: 'home',
-				kelas: [],
-				numbers: [1,2,3,4,5,6,7,8,9,10]
+				kelas: ['Golang', 'PHP', 'Javascript'],
+				numbers: [1,2,3,4,5,6,7,8,9,10],
+				items: [
+					{
+						name: 'Rizky',
+						message: 'Lorem ipsum rizky'
+					},
+					{
+						name: 'Raihan',
+						message: 'Lorem ipsum Raihan'
+					}
+				],
+				object: {
+					title: 'Title 1',
+					description: 'Description 1'
+				}
 			},
 			methods: {
 				getName: function(){
