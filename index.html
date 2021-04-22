@@ -29,7 +29,7 @@
 			</div>
 			<p>Pilihan anda adalah : </p>
 			<p v-text=kelas></p>
-			<ul>
+			<ul if="kelas.length > 0">
 				<!-- melooping data array dan memunculkannya -->
 				<li v-for="(k, index) of kelas">{{`${k} ${index+1}`}}</li>
 			</ul>
