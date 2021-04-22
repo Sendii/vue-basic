@@ -27,12 +27,13 @@
 				<input type="checkbox" value="Vue" v-model="kelas">Vue
 				<input type="checkbox" value="Angular" v-model="kelas">Angular
 			</div>
-			<p>Pilihan anda adalah : </p>
-			<p v-text=kelas></p>
-			<ul if="kelas.length > 0">
+			<ul v-if="kelas.length > 0">
 				<!-- melooping data array dan memunculkannya -->
 				<li v-for="(k, index) of kelas">{{`${k} ${index+1}`}}</li>
 			</ul>
+			<p v-else>
+				<b>Kelas belum dipilih</b>
+			</p>
 			<p>Mencari bilangan 1 - 10 yang genap dan ganjil</p>
 			<ul>
 				<!-- <li v-for="x of numbers">{{checkNumber(x)}}</li> -->
