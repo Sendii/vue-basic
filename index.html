@@ -31,7 +31,7 @@
 			<p v-text=kelas></p>
 			<ul>
 				<!-- melooping data array dan memunculkannya -->
-				<li v-for="k of kelas" v-text="k"></li>
+				<li v-for="(k, index) of kelas">{{`${k} ${index+1}`}}</li>
 			</ul>
 			<h1 v-html="link"></h1>
 			<!-- v-on:nama events
