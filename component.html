@@ -10,9 +10,10 @@
 </head>
 <body>
 	<div id="app">
-		<c-header></c-header>
+		<c-header message="haloo component" gambar="images/vue3.png"></c-header>
+		<c-header message="haloo component lagii" gambar="images/vue2.png"></c-header>
 		<main>
-			<c-main />
+			<c-main :items="kelas" :input="kelasbaru"/>
 		</main>	
 		<c-footer />
 	</div>
@@ -20,10 +21,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 	<script>
 		Vue.component('c-header', {
+			props: ['message', 'gambar'],
 			template: `
 			<header>
-			<img style="height: 200px;border-radius: 10px;display: block;margin-bottom: 20px;" src="images/vue2.png" alt="gambar">
-			<p v-text="pesan"></p>
+			<img style="height: 200px;border-radius: 10px;display: block;margin-bottom: 20px;" :src="gambar" alt="gambar">
+			<p>ini {{message}}</p>
 			</header>
 			`,
 			data: function(){
@@ -34,14 +36,15 @@
 		})
 
 		Vue.component('c-main', {
+			props: ['items', 'input'],
 			template: `
 			<div>
 			<h5>Tambah kelas dengan enter</h5>
-			<input type="text" placeholder="Masukkan Kelas" @keyup.enter="submit" v-model="kelasbaru">
-			<template v-if="kelas.length > 0">
+			<input type="text" placeholder="Masukkan Kelas" @keyup.enter="submit" v-model="input">
+			<template v-if="items.length > 0">
 			<ul>
 			<!-- melooping data array dan memunculkannya -->
-			<li v-for="(k, index) of kelas">{{index+1}} - {{k}}</li>
+			<li v-for="(k, index) of items">{{index+1}} - {{k}}</li>
 			</ul>				
 			</template>
 			<p v-else>
@@ -50,15 +53,13 @@
 			</div>
 			`,
 			data: function(){
-				return{
-					kelas: ['PHP', 'Javascript'],
-					kelasbaru: ''
-				}
+				
 			},
 			methods: {
 				submit: function(e){
-					this.kelas.unshift(this.kelasbaru)
-					this.kelasbaru = ''
+					// this.kelas.unshift(input)
+					// this.kelasbaru = ''
+					alert('ea')
 				}
 			}
 		})
@@ -73,7 +74,8 @@
 		const vm = new Vue({
 			el: '#app',
 			data: {
-				
+				kelas: ['PHP', 'Javascript'],
+				kelasbaru: ''				
 			},
 			methods: {
 				
