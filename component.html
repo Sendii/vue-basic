@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue Component</title>
+	<style>
+		body {
+			margin: 5%;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<c-header></c-header>
+		<main>
+			<div>
+				<h5>Tambah kelas dengan enter</h5>
+				<input type="text" placeholder="Masukkan Kelas" @keyup.enter="submit" v-model="kelasbaru">
+				<template v-if="kelas.length > 0">
+					<ul>
+						<!-- melooping data array dan memunculkannya -->
+						<li v-for="(k, index) of kelas">{{`${k} ${index+1}`}}</li>
+					</ul>				
+				</template>
+				<p v-else>
+					<b>Kelas belum dipilih</b>
+				</p>
+			</div>
+		</main>	
+		<c-footer></c-footer>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+	<script>
+		Vue.component('c-header', {
+			template: `
+			<header>
+			<img style="height: 200px;border-radius: 10px;display: block;margin-bottom: 20px;" src="images/vue2.png" alt="gambar">
+			The Header Progressive Website
+			</header>`
+		})
+
+		Vue.component('c-footer', {
+			template: `
+			<footer id="footer">
+			<p>copyright 2021</p>			
+			</footer>`
+		})
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				kelas: ['PHP', 'Javascript'],
+				kelasbaru: ''
+			},
+			methods: {
+				submit: function(e){
+					this.kelas.unshift(this.kelasbaru)
+					this.kelasbaru = ''
+				}
+			},
+			computed: {
+
+			}
+		})
+	</script>
+</body>
+</html>
