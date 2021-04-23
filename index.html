@@ -20,8 +20,8 @@
 			<!-- v-bind:attribute html
 			di attribute html tidak bisa mengakses data model langsung, perlu memakai v-bind atau :attribute -->
 			<img style="height: 200px;border-radius: 10px;display: block;margin-bottom: 20px;" :src="gambar" alt="gambar">
-			<h5 v-text="name"></h5>
-			<input type="text" v-model="name">
+			<h5>Tambah kelas dengan enter</h5>
+			<input type="text" placeholder="Masukkan Kelas" @keyup.enter="submit">
 			<div>
 				<input type="checkbox" value="React" v-model="kelas">React
 				<input type="checkbox" value="Vue" v-model="kelas">Vue
@@ -123,6 +123,10 @@
 					return data.filter(angka => {
 						return angka % 2 == 0
 					})
+				},
+				submit: function(e){
+					this.kelas.push(e.target.value)
+					e.target.value = ''
 				}
 			},
 			computed: {
