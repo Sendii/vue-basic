@@ -19,7 +19,7 @@
 		<c-header message="haloo component lagii" gambar="images/vue2.png"></c-header>
 		<main>
 			<!-- memanggil props child&input, props berbentuk event yang namanya dari emit dan nama fungsinya yaitu hapusKelas -->
-			<c-main :child="kelas" :input="kelasbaru" @hapuskelas="hapusKelas"/>
+			<c-main :child="kelas" @submitkelas="submitKelas" @hapuskelas="hapusKelas"/>
 		</main>	
 		<c-footer />
 	</div>
@@ -42,11 +42,11 @@
 		})
 
 		Vue.component('c-main', {
-			props: ['child', 'input'],
+			props: ['child'],
 			template: `
 			<div>
 			<h5>Tambah kelas dengan enter</h5>
-			<input type="text" placeholder="Masukkan Kelas" @keyup.enter="submit" v-model="input">
+			<input type="text" placeholder="Masukkan Kelas" @keyup.enter="$emit('submitkelas', $event)">
 			<template v-if="child.length > 0">
 			<ul>
 			<!-- melooping data array dan memunculkannya -->
@@ -68,10 +68,7 @@
 				
 			},
 			methods: {
-				submit: function(e){
-					this.child.unshift(this.input)
-					this.input = ''
-				}
+				
 			}
 		})
 
@@ -85,8 +82,7 @@
 		const vm = new Vue({
 			el: '#app',
 			data: {
-				kelas: ['PHP', 'Javascript'],
-				kelasbaru: ''				
+				kelas: ['PHP', 'Javascript']
 			},
 			methods: {
 				hapusKelas: function(index){
@@ -95,6 +91,10 @@
 					setTimeout(function(){
 						document.getElementsByClassName('text-danger')[0].style.display = 'none'
 					}, 5000)
+				},
+				submitKelas: function(event){
+					this.kelas.unshift(event.target.value)
+					event.target.value = ''
 				}
 			},
 			computed: {
