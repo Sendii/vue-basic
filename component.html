@@ -13,7 +13,8 @@
 		<c-header message="haloo component" gambar="images/vue3.png"></c-header>
 		<c-header message="haloo component lagii" gambar="images/vue2.png"></c-header>
 		<main>
-			<c-main :child="kelas" :input="kelasbaru"/>
+			<!-- memanggil props child&input, props berbentuk event yang namanya dari emit dan nama fungsinya yaitu hapusKelas -->
+			<c-main :child="kelas" :input="kelasbaru" @hapuskelas="hapusKelas"/>
 		</main>	
 		<c-footer />
 	</div>
@@ -44,7 +45,10 @@
 			<template v-if="child.length > 0">
 			<ul>
 			<!-- melooping data array dan memunculkannya -->
-			<li v-for="(k, index) of child">{{index+1}} - {{k}}</li>
+			<li v-for="(k, index) of child">{{index+1}} - {{k}}
+			<!-- menghapus data menggunakan parameter index/key nya -->
+			<a href="" @click.prevent="$emit('hapuskelas', index)">hapus</a>
+			</li>
 			</ul>				
 			</template>
 			<p v-else>
@@ -77,7 +81,9 @@
 				kelasbaru: ''				
 			},
 			methods: {
-				
+				hapusKelas: function(index){
+					this.kelas.splice(index, 1)
+				}
 			},
 			computed: {
 
