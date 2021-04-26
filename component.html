@@ -13,7 +13,7 @@
 		<c-header message="haloo component" gambar="images/vue3.png"></c-header>
 		<c-header message="haloo component lagii" gambar="images/vue2.png"></c-header>
 		<main>
-			<c-main :items="kelas" :input="kelasbaru"/>
+			<c-main :child="kelas" :input="kelasbaru"/>
 		</main>	
 		<c-footer />
 	</div>
@@ -36,15 +36,15 @@
 		})
 
 		Vue.component('c-main', {
-			props: ['items', 'input'],
+			props: ['child', 'input'],
 			template: `
 			<div>
 			<h5>Tambah kelas dengan enter</h5>
 			<input type="text" placeholder="Masukkan Kelas" @keyup.enter="submit" v-model="input">
-			<template v-if="items.length > 0">
+			<template v-if="child.length > 0">
 			<ul>
 			<!-- melooping data array dan memunculkannya -->
-			<li v-for="(k, index) of items">{{index+1}} - {{k}}</li>
+			<li v-for="(k, index) of child">{{index+1}} - {{k}}</li>
 			</ul>				
 			</template>
 			<p v-else>
@@ -57,9 +57,8 @@
 			},
 			methods: {
 				submit: function(e){
-					// this.kelas.unshift(input)
-					// this.kelasbaru = ''
-					alert('ea')
+					this.child.unshift(this.input)
+					this.input = ''
 				}
 			}
 		})
