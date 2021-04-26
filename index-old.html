@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue tutorials</title>
+	<style>
+		body {
+			margin: 5%;
+		}
+		.active{
+			background-color: grey;
+			padding: 5px;
+			border-radius: 5px;
+			border: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<header>
+			<!-- v-bind:attribute html
+				di attribute html tidak bisa mengakses data model langsung, perlu memakai v-bind atau :attribute -->
+				<img style="height: 200px;border-radius: 10px;display: block;margin-bottom: 20px;" :src="gambar" alt="gambar">
+				<h4 v-text="name"></h4>
+				<div>
+					<span>Message is : </span>
+					<p v-text="message"></p>
+					<textarea v-model="message"></textarea>
+					<div>
+						======================
+					</div>
+					<input type="checkbox" v-model="act">
+					<label for="checkbox" v-text="act"></label>
+				</div>
+				<div>
+					<h5>Tambah kelas dengan enter</h5>
+					<input type="text" placeholder="Masukkan Kelas" @keyup.enter="submit">
+					<input type="text" placeholder="Update data disini" v-model="name">
+					<div>
+						<input type="checkbox" value="React" v-model="kelas">React
+						<input type="checkbox" value="Vue" v-model="kelas">Vue
+						<input type="checkbox" value="Angular" v-model="kelas">Angular
+					</div>
+					<template v-if="kelas.length > 0">
+						<ul>
+							<!-- melooping data array dan memunculkannya -->
+							<li v-for="(k, index) of kelas">{{`${k} ${index+1}`}}</li>
+						</ul>				
+					</template>
+					<p v-else>
+						<b>Kelas belum dipilih</b>
+					</p>
+				</div>
+				<ul>
+					<!-- access object in array -->
+					<li v-for="(item, i) of items" :key="i" v-text="item.name"></li>
+				</ul>
+				<ul>
+					<!-- access single object -->
+					<li v-for="(obj, keyname, index) of object" :key="keyname">{{`${index+1}: ${keyname} - ${obj}`}}</li>
+				</ul>
+				<p>Mencari bilangan 1 - 10 yang genap dan ganjil</p>
+				<ul>
+					<!-- <li v-for="x of numbers">{{checkNumber(x)}}</li> -->
+					<li v-for="genap of cekBilanganGenap(numbers)" v-text="genap"></li>
+				</ul>
+				<h1 v-html="link"></h1>
+			<!-- v-on:nama events
+				untuk melakukan event perlu menambahkan v-on:name events atau bisa disingkat dengan @namaevent -->
+				<div>
+					<button @click="bilangan > 0 ? changeBilangan('-') : alert('tidak bisa') " >Kurang</button>
+					<button @click="changeBilangan('+')">Tambah</button>
+					<button @click="changeBilangan('reset')">Reset</button>
+				</div>
+				<div style="margin-top: 20px;">
+					<!-- .prevent menggantikan event.preventDefault() di javascript -->
+					<a :class="{active: menu == 'home'}" href="#" @click.prevent="changeMenu('home')">Home</a>
+					<a :class="{active: menu == 'about'}" href="#" @click.prevent="changeMenu('about')">About</a>
+					<a :class="{active: menu == 'blog'}" href="#" @click.prevent="changeMenu('blog')">Blog</a>
+					<h2 v-text="bilangan + cekBilangan"></h2>
+				</div>
+				<!-- <h4 v-text="bilangan % 2 == 0 ? 'Genap' : 'Ganjil'"></h4> -->
+			</header>		
+			<footer id="footer">
+				<p>copyright 2021</p>			
+			</footer>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+		<script>
+			const vm = new Vue({
+				el: '#app',
+				data: {
+					name: 'Sendi Hadi',
+					act: true,
+					message: 'Lorem ipsum dolor sit umut',
+					qty: 1,
+					namaDepan: 'Sendi ',
+					namaBelakang: 'Dian',
+					bilangan: 1,
+					link: '<a href="google.com">ini link</a>',
+					gambar: 'images/vue2.png',
+					menu: 'home',
+					kelas: ['Golang', 'PHP', 'Javascript'],
+					numbers: [1,2,3,4,5,6,7,8,9,10],
+					items: [
+					{
+						name: 'Rizky',
+						message: 'Lorem ipsum rizky'
+					},
+					{
+						name: 'Raihan',
+						message: 'Lorem ipsum Raihan'
+					}
+					],
+					object: {
+						title: 'Title 1',
+						description: 'Description 1'
+					}
+				},
+				methods: {
+					getName: function(){
+						return `Heloo ${this.name}`
+					},
+					changeName: function(namaBaru){
+						this.name = namaBaru
+						return this.getName()
+					},
+					changeBilangan: function(inf){
+						return (inf == '+' ? this.bilangan++ : inf == '-' ? this.bilangan-- : this.bilangan = 1)
+					},
+					changeMenu: function(page){
+						this.menu = page
+					},
+				// checkNumber: function(numb){
+				// 	return `bilangan ${numb} adalah  ${numb % 2 === 0 ? 'Genap' : 'Ganjil'}`
+				// }
+				cekBilanganGenap: function(data){
+					return data.filter(angka => {
+						return angka % 2 == 0
+					})
+				},
+				submit: function(e){
+					this.kelas.push(e.target.value)
+					e.target.value = ''
+				}
+			},
+			computed: {
+				totalBayar: function(){
+					return this.qty * 10000
+				},
+				namaLengkap: function(){
+					return `Haloo ${this.namaDepan} ${this.namaBelakang}`
+				},
+				cekBilangan: function(){
+					return ` adalah bilangan ${this.bilangan % 2 === 0 ? 'Genap' : 'Ganjil'}`
+				}
+			}
+		})		
+	</script>
+</body>
+</html>
