@@ -6,6 +6,11 @@
 		body {
 			margin: 5%;
 		}
+		.text-danger{
+			color: red;
+			transition-duration: 5s;
+  			transition-delay: 2s;
+		}
 	</style>
 </head>
 <body>
@@ -52,7 +57,10 @@
 			</ul>				
 			</template>
 			<p v-else>
-			<b>Kelas belum dipilih</b>
+			<b>Belum  ada kelas, silakan tambahkan kelas</b>
+			</p>
+			<p class="text-danger" style="display: none">
+			Berhasil menghapus data
 			</p>
 			</div>
 			`,
@@ -83,6 +91,10 @@
 			methods: {
 				hapusKelas: function(index){
 					this.kelas.splice(index, 1)
+					document.getElementsByClassName('text-danger')[0].style.display = 'block'
+					setTimeout(function(){
+						document.getElementsByClassName('text-danger')[0].style.display = 'none'
+					}, 5000)
 				}
 			},
 			computed: {
