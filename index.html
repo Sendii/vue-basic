@@ -45,9 +45,9 @@
 			<template v-if="child.length > 0">
 			<ul>
 			<!-- melooping data array dan memunculkannya -->
-			<li v-for="(k, index) of child">{{index+1}} - {{k}}
+			<li v-for="(k, index) of child">{{index+1}} - {{k.judul}} - {{k.deskripsi}}
 			<!-- menghapus data menggunakan parameter index/key nya -->
-			<a href="" @click.prevent="$emit('hapuskelas', index)">hapus</a>
+			<a href="" @click.prevent="$emit('hapuskelas', k.id)">hapus</a>
 			</li>
 			</ul>				
 			</template>
@@ -104,11 +104,15 @@
 			el: '#app',
 			router,
 			data: {
-				kelas: ['PHP', 'Javascript']
+				kelas: [
+					{id: 1, judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'},
+					{id: 2, judul: 'Ini judul Javascript', deskripsi: 'Ini deskripsi Javascript', gambar: 'vue2.png'},
+					{id: 3, judul: 'Ini judul CSS', deskripsi: 'Ini deskripsi CSS', gambar: 'vue3.png'},
+				]
 			},
 			methods: {
-				hapusKelas: function(index){
-					this.kelas.splice(index, 1)
+				hapusKelas: function(id){
+					this.kelas = this.kelas.filter(item => item.id != id)
 					document.getElementsByClassName('text-danger')[0].style.display = 'block'
 					setTimeout(function(){
 						document.getElementsByClassName('text-danger')[0].style.display = 'none'
