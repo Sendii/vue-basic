@@ -25,14 +25,15 @@
 		</nav>
 		<main>
 			<!-- <c-main :child="kelas" @submitkelas="submitKelas" @hapuskelas="hapusKelas"/> -->
-			 <!-- <router-view :child="kelas" @submitkelas="submitKelas" @hapuskelas="hapusKelas"></router-view> -->
-			 <router-view :child="kelas" @submitkelas="submitKelas" @hapuskelas="hapusKelas"></router-view>
+			<!-- <router-view :child="kelas" @submitkelas="submitKelas" @hapuskelas="hapusKelas"></router-view> -->
+			<router-view :child="kelas" @em-submitkelas="submitKelasParent" @hapuskelas="hapusKelas"></router-view>
 		</main>	
 		<c-footer />
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 	<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+	<script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
 	<script>
 		const Home  = { template: '<div>Ini Homee</div>' }
 		const About = { template: '<div>Ini About</div>' }
@@ -41,7 +42,22 @@
 			template: `
 			<div>
 			<h5>Tambah kelas dengan enter</h5>
-			<input type="text" placeholder="Masukkan Kelas" @keyup.enter="$emit('submitkelas', $event)">
+			<form @submit.prevent="submitKelasChild">						
+			<div>
+			<label>Judul</label> <br>
+			<input type="text" placeholder="Judul" v-model="kelas.judul">
+			</div>
+			<div>
+			<label>Deskripsi</label> <br>
+			<textarea v-model="kelas.deskripsi"></textarea>
+			</div>
+			<div>
+			<label>Gambar</label> <br>
+			<input type="file">
+			</div>
+			<br>
+			<button type="submit">Tambahkan</button>
+			</form>
 			<template v-if="child.length > 0">
 			<ul>
 			<!-- melooping data array dan memunculkannya -->
@@ -60,10 +76,31 @@
 			</div>
 			`,
 			data: function(){
-				
+				return {
+					kelas: {
+						judul: '',
+						deskripsi: '',
+						gambar: ''
+					}
+				}
 			},
 			methods: {
-				
+				submitKelasChild: function(){
+					if (this.kelas.judul && this.kelas.deskripsi) {
+						const sendData = {
+							id: uuidv4(),
+							judul: this.kelas.judul,
+							deskripsi: this.kelas.deskripsi,
+							gambar: null
+						}
+						this.$emit('em-submitkelas', sendData)
+
+						this.kelas.judul = ''
+						this.kelas.deskripsi = ''
+					}else{
+						alert('masih ada yang kosong')
+					}
+				}
 			}
 		}
 
@@ -105,9 +142,9 @@
 			router,
 			data: {
 				kelas: [
-					{id: 1, judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'},
-					{id: 2, judul: 'Ini judul Javascript', deskripsi: 'Ini deskripsi Javascript', gambar: 'vue2.png'},
-					{id: 3, judul: 'Ini judul CSS', deskripsi: 'Ini deskripsi CSS', gambar: 'vue3.png'},
+				{id: 1, judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'},
+				{id: 2, judul: 'Ini judul Javascript', deskripsi: 'Ini deskripsi Javascript', gambar: 'vue2.png'},
+				{id: 3, judul: 'Ini judul CSS', deskripsi: 'Ini deskripsi CSS', gambar: 'vue3.png'},
 				]
 			},
 			methods: {
@@ -118,9 +155,8 @@
 						document.getElementsByClassName('text-danger')[0].style.display = 'none'
 					}, 5000)
 				},
-				submitKelas: function(event){
-					this.kelas.unshift(event.target.value)
-					event.target.value = ''
+				submitKelasParent: function(data){
+					this.kelas.push(data)
 				}
 			},
 			computed: {
