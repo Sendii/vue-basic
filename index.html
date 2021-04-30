@@ -15,6 +15,12 @@
 			width: 200px;
 			border-radius: 10px;
 		}
+		.form-group{
+			margin-bottom: 10px;
+		}
+		.error{
+			color: red;
+		}
 	</style>
 </head>
 <body>
@@ -47,15 +53,17 @@
 			<div>
 			<h5>Tambah kelas dengan enter</h5>
 			<form @submit.prevent="submitKelasChild">						
-			<div>
+			<div class="form-group">
 			<label>Judul</label> <br>
 			<input type="text" placeholder="Judul" v-model="kelas.judul">
+			<div class="error" v-if="error.judul">{{error.judul}}</div>
 			</div>
-			<div>
+			<div class="form-group">
 			<label>Deskripsi</label> <br>
 			<textarea v-model="kelas.deskripsi"></textarea>
+			<div class="error" v-if="error.deskripsi">{{error.deskripsi}}</div>
 			</div>
-			<div>
+			<div class="form-group">
 			<img :src="previewimg" v-if="previewimg" width="200"/> <br>
 			<label>Gambar</label> <br>
 			<input type="file" ref="gambar" @change="uploadFile">
@@ -89,12 +97,25 @@
 						deskripsi: '',
 						gambar: ''
 					},
+					error: {
+						judul: '',
+						deskripsi: ''
+					},
 					previewimg: ''
 				}
 			},
 			methods: {
 				submitKelasChild: function(){
-					console.log(this.kelas)
+					if (this.kelas.judul == '') {
+						this.error.judul = 'Judul is required'
+					}else{
+						this.error.judul = ''
+					}
+					if(this.kelas.deskripsi == ''){
+						this.error.deskripsi = 'Deskripsi is required'
+					}else{
+						this.error.deskripsi = ''
+					}
 					if (this.kelas.judul && this.kelas.deskripsi) {
 						const sendData = {
 							id: uuidv4(),
@@ -109,9 +130,7 @@
 						this.kelas.gambar = ''
 						this.previewimg = ''
 						this.$refs.gambar.value = ''
-					}else{
-						alert('masih ada yang kosong')
-					}
+					}					
 				},
 				uploadFile: function(event){
 					this.kelas.gambar = event.target.files[0].name
