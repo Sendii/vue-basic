@@ -49,6 +49,7 @@
 		const About = { template: '<div>Ini About</div>' }
 		const detailKelas = {
 			template: `<div>
+			<img :src="detail_kelas.gambar" width="200"/> <br>
 			<h3>{{detail_kelas.judul}} - {{$route.params.id_kelas}}</h3>
 			<p>{{detail_kelas.deskripsi}}</p>
 			<router-link to="/kelas">kembali</router-link>
@@ -98,12 +99,12 @@
 			<template v-if="child.length > 0">
 			<ul>
 			<!-- melooping data array dan memunculkannya -->
-			<li v-for="(k, index) of child">
+			<li v-for="(k, index) of child" style="margin-bottom: 30px;">
 			<img :src="k.gambar" alt="" class="gambar" /> <br>
 			{{index+1}} - {{k.judul}} - {{k.deskripsi}}
 			<!-- menghapus data menggunakan parameter index/key nya -->
-			<a href="" @click.prevent="$emit('hapuskelas', k.id)">hapus</a>
 			<router-link :to="'/kelas/' + k.id">Lihat kelas</router-link>
+			<a href="" @click.prevent="$emit('hapuskelas', k.id)">hapus</a><hr>
 			</li>
 			</ul>				
 			</template>
@@ -158,7 +159,8 @@
 					}					
 				},
 				uploadFile: function(event){
-					this.kelas.gambar = event.target.files[0].name
+					// this.kelas.gambar = event.target.files[0].name
+					this.kelas.gambar = URL.createObjectURL(event.target.files[0])
 					this.previewimg   = URL.createObjectURL(event.target.files[0])
 				}
 			}
