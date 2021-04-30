@@ -75,7 +75,7 @@
 			<ul>
 			<!-- melooping data array dan memunculkannya -->
 			<li v-for="(k, index) of child">
-			<img :src="'images/'+k.gambar" alt="" class="gambar" /> <br>
+			<img :src="k.gambar" alt="" class="gambar" /> <br>
 			{{index+1}} - {{k.judul}} - {{k.deskripsi}}
 			<!-- menghapus data menggunakan parameter index/key nya -->
 			<p><a href="" @click.prevent="$emit('hapuskelas', k.id)">hapus</a></p>
@@ -121,7 +121,7 @@
 							id: uuidv4(),
 							judul: this.kelas.judul,
 							deskripsi: this.kelas.deskripsi,
-							gambar: this.kelas.gambar
+							gambar: this.previewimg
 						}
 						this.$emit('em-submitkelas', sendData)
 
