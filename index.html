@@ -187,16 +187,29 @@
 			},
 			created(){
 				this.kelas = JSON.parse(localStorage.getItem('kelas')) || []
+				console.log('create')
+			},
+			beforeCreate(){
+				console.log('before-create')
+			},
+			mounted(){
+				console.log('mounte')
+			},
+			beforeUpdate(){
+				console.log('before-update')
+			},
+			updated(){
+				console.log('Updated')
 			},
 			methods: {
 				hapusKelas: function(id){
 					this.kelas = this.kelas.filter(item => item.id != id)
 					localStorage.setItem('kelas', JSON.stringify(this.kelas))
-					JSON.parse(localStorage.getItem('kelas')).splice(item => item.id != id)
-					document.getElementsByClassName('text-danger')[0].style.display = 'block'
-					setTimeout(function(){
-						document.getElementsByClassName('text-danger')[0].style.display = 'none'
-					}, 5000)
+					swal({
+						title: 'Sukses',
+						text: "Berhasil menghapus data kelas ",
+						icon: "warning"
+					});
 				},
 				submitKelasParent: function(data){
 					this.kelas.push(data)
@@ -204,7 +217,7 @@
 					swal("Sukses!", "Berhasil menambah data kelas", "success");
 					swal({
 						title: 'Sukses',
-						text: "Berhasil menambah data kelas " + this.kelas.judul,
+						text: "Berhasil menambah data kelas " + data.judul,
 						icon: "success"
 					});
 				}
