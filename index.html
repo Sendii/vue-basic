@@ -19,7 +19,6 @@
 </head>
 <body>
 	<div id="app">
-		<c-header message="haloo component" gambar="images/vue3.png"></c-header>
 		<c-header message="haloo component lagii" gambar="images/vue2.png"></c-header>
 
 		<nav>
@@ -41,6 +40,7 @@
 	<script>
 		const Home  = { template: '<div>Ini Homee</div>' }
 		const About = { template: '<div>Ini About</div>' }
+		const Notfound = { template: '<div>Ini halaman not found</div>' }
 		const Kelas = {
 			props: ['child'],
 			template: `
@@ -94,6 +94,7 @@
 			},
 			methods: {
 				submitKelasChild: function(){
+					console.log(this.kelas)
 					if (this.kelas.judul && this.kelas.deskripsi) {
 						const sendData = {
 							id: uuidv4(),
@@ -122,7 +123,8 @@
 		const routes = [
 		{ path: '/', component: Home },
 		{ path: '/about', component: About },
-		{ path: '/kelas', component: Kelas }
+		{ path: '/kelas', component: Kelas },
+		{ path: '*', component: Notfound}
 		]
 
 		const router = new VueRouter({
