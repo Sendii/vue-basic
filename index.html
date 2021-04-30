@@ -177,15 +177,21 @@
 			el: '#app',
 			router,
 			data: {
-				kelas: [
-				{id: 1, judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'},
-				{id: 2, judul: 'Ini judul Javascript', deskripsi: 'Ini deskripsi Javascript', gambar: 'vue2.png'},
-				{id: 3, judul: 'Ini judul CSS', deskripsi: 'Ini deskripsi CSS', gambar: 'vue3.png'},
-				]
+				// kelas: [
+				// {id: 1, judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'},
+				// {id: 2, judul: 'Ini judul Javascript', deskripsi: 'Ini deskripsi Javascript', gambar: 'vue2.png'},
+				// {id: 3, judul: 'Ini judul CSS', deskripsi: 'Ini deskripsi CSS', gambar: 'vue3.png'},
+				// ]
+				kelas: []
+			},
+			created(){
+				this.kelas = JSON.parse(localStorage.getItem('kelas')) || []
 			},
 			methods: {
 				hapusKelas: function(id){
 					this.kelas = this.kelas.filter(item => item.id != id)
+					localStorage.setItem('kelas', JSON.stringify(this.kelas))
+					JSON.parse(localStorage.getItem('kelas')).splice(item => item.id != id)
 					document.getElementsByClassName('text-danger')[0].style.display = 'block'
 					setTimeout(function(){
 						document.getElementsByClassName('text-danger')[0].style.display = 'none'
@@ -193,6 +199,7 @@
 				},
 				submitKelasParent: function(data){
 					this.kelas.push(data)
+					localStorage.setItem('kelas', JSON.stringify(this.kelas))
 				}
 			},
 			computed: {
