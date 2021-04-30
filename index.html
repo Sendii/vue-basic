@@ -47,6 +47,29 @@
 	<script>
 		const Home  = { template: '<div>Ini Homee</div>' }
 		const About = { template: '<div>Ini About</div>' }
+		const detailKelas = {
+			template: `<div>
+			<h3>{{detail_kelas.judul}} - {{$route.params.id_kelas}}</h3>
+			<p>{{detail_kelas.deskripsi}}</p>
+			<router-link to="/kelas">kembali</router-link>
+			</div>`,
+			data(){
+				return {
+					detail_kelas: {}
+				}
+			},
+			created(){
+				this.filterKelasById()
+			},
+			methods: {
+				filterKelasById() {
+					let kelas = JSON.parse(localStorage.getItem('kelas'))
+					let id = this.$route.params.id_kelas
+					let item = kelas.filter(k => k.id == id)
+					this.detail_kelas = item[0]
+				}
+			}
+		}
 		const Notfound = { template: '<div>Ini halaman not found</div>' }
 		const Kelas = {
 			props: ['child'],
@@ -79,7 +102,8 @@
 			<img :src="k.gambar" alt="" class="gambar" /> <br>
 			{{index+1}} - {{k.judul}} - {{k.deskripsi}}
 			<!-- menghapus data menggunakan parameter index/key nya -->
-			<p><a href="" @click.prevent="$emit('hapuskelas', k.id)">hapus</a></p>
+			<a href="" @click.prevent="$emit('hapuskelas', k.id)">hapus</a>
+			<router-link :to="'/kelas/' + k.id">Lihat kelas</router-link>
 			</li>
 			</ul>				
 			</template>
@@ -144,6 +168,7 @@
 		{ path: '/', component: Home },
 		{ path: '/about', component: About },
 		{ path: '/kelas', component: Kelas },
+		{ path: '/kelas/:id_kelas', component: detailKelas },
 		{ path: '*', component: Notfound}
 		]
 
@@ -186,21 +211,24 @@
 				kelas: []
 			},
 			created(){
+				localStorage.setItem('kelas', JSON.stringify([
+					{id: '6c5d9563-3a73-43e7-8ce3-c725340ac466', judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'}
+					])
+				)
 				this.kelas = JSON.parse(localStorage.getItem('kelas')) || []
-				console.log('create')
 			},
-			beforeCreate(){
-				console.log('before-create')
-			},
-			mounted(){
-				console.log('mounte')
-			},
-			beforeUpdate(){
-				console.log('before-update')
-			},
-			updated(){
-				console.log('Updated')
-			},
+			// beforeCreate(){
+			// 	console.log('before-create')
+			// },
+			// mounted(){
+			// 	console.log('mounte')
+			// },
+			// beforeUpdate(){
+			// 	console.log('before-update')
+			// },
+			// updated(){
+			// 	console.log('Updated')
+			// },
 			methods: {
 				hapusKelas: function(id){
 					this.kelas = this.kelas.filter(item => item.id != id)
