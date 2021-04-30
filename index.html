@@ -43,6 +43,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 	<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 	<script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
 		const Home  = { template: '<div>Ini Homee</div>' }
 		const About = { template: '<div>Ini About</div>' }
@@ -107,12 +108,12 @@
 			methods: {
 				submitKelasChild: function(){
 					if (this.kelas.judul == '') {
-						this.error.judul = 'Judul is required'
+						this.error.judul = 'Judul wajib diisi'
 					}else{
 						this.error.judul = ''
 					}
 					if(this.kelas.deskripsi == ''){
-						this.error.deskripsi = 'Deskripsi is required'
+						this.error.deskripsi = 'Deskripsi wajib diisi'
 					}else{
 						this.error.deskripsi = ''
 					}
@@ -200,6 +201,12 @@
 				submitKelasParent: function(data){
 					this.kelas.push(data)
 					localStorage.setItem('kelas', JSON.stringify(this.kelas))
+					swal("Sukses!", "Berhasil menambah data kelas", "success");
+					swal({
+						title: 'Sukses',
+						text: "Berhasil menambah data kelas " + this.kelas.judul,
+						icon: "success"
+					});
 				}
 			},
 			computed: {
