@@ -49,7 +49,7 @@
 		const About = { template: '<div>Ini About</div>' }
 		const detailKelas = {
 			template: `<div>
-			<img :src="detail_kelas.gambar" width="200"/> <br>
+			<img :src="detail_kelas.gambar" width="200" class="gambar"/> <br>
 			<h3>{{detail_kelas.judul}} - {{$route.params.id_kelas}}</h3>
 			<p>{{detail_kelas.deskripsi}}</p>
 			<router-link to="/kelas">kembali</router-link>
@@ -213,10 +213,10 @@
 				kelas: []
 			},
 			created(){
-				localStorage.setItem('kelas', JSON.stringify([
-					{id: '6c5d9563-3a73-43e7-8ce3-c725340ac466', judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'}
-					])
-				)
+				// localStorage.setItem('kelas', JSON.stringify([
+				// 	{id: '6c5d9563-3a73-43e7-8ce3-c725340ac466', judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'}
+				// 	])
+				// )
 				this.kelas = JSON.parse(localStorage.getItem('kelas')) || []
 			},
 			// beforeCreate(){
