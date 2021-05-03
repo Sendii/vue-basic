@@ -255,8 +255,12 @@
 					});
 				},
 				submitKelasParent: function(data){
-					this.kelas.push(data)
-					localStorage.setItem('kelas', JSON.stringify(this.kelas))
+					this.kelas = []
+					refKelas.push({
+						judul: data.judul,
+						deskripsi: data.deskripsi,
+						gambar: data.gambar
+					})
 					swal("Sukses!", "Berhasil menambah data kelas", "success");
 					swal({
 						title: 'Sukses',
