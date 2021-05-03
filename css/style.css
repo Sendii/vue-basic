@@ -1,0 +1,18 @@
+body {
+	margin: 5%;
+}
+.text-danger{
+	color: red;
+	transition-duration: 5s;
+	transition-delay: 2s;
+}
+.gambar{
+	width: 200px;
+	border-radius: 10px;
+}
+.form-group{
+	margin-bottom: 10px;
+}
+.error{
+	color: red;
+}
