@@ -246,16 +246,15 @@
 			// },
 			methods: {
 				hapusKelas: function(id){
-					this.kelas = this.kelas.filter(item => item.id != id)
-					localStorage.setItem('kelas', JSON.stringify(this.kelas))
+					db.ref('kelas/'+id).remove()
 					swal({
 						title: 'Sukses',
 						text: "Berhasil menghapus data kelas ",
-						icon: "warning"
+						icon: "success"
 					});
 				},
 				submitKelasParent: function(data){
-					this.kelas = []
+					
 					refKelas.push({
 						judul: data.judul,
 						deskripsi: data.deskripsi,
@@ -269,9 +268,15 @@
 					});
 				},
 				resultData(items){
+					this.kelas = []
 					items.forEach( (item) => {
-						console.log(item.val())
-						this.kelas.push(item.val())
+						let data = {
+							id: item.key,
+							judul: item.val().judul,
+							deskripsi: item.val().deskripsi,
+							gambar: item.val().gambar,
+						}
+						this.kelas.push(data)
 					} )
 				},
 				errorData(err){
