@@ -44,6 +44,23 @@
 	<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 	<script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+	<script>
+		var firebaseConfig = {
+			apiKey: "AIzaSyDyQC41jtR6MbkeGm8UbZiGoCyvmVcXl9U",
+			authDomain: "tutorial-vue-e8ac3.firebaseapp.com",
+			projectId: "tutorial-vue-e8ac3",
+			storageBucket: "tutorial-vue-e8ac3.appspot.com",
+			messagingSenderId: "982178270147",
+			appId: "1:982178270147:web:4835ea9cc9c2c70cd5cb76"
+		};
+		firebase.initializeApp(firebaseConfig);
+
+		const db = firebase.database()
+		const refKelas = db.ref('kelas')
+	</script>
 	<script>
 		const Home  = { template: '<div>Ini Homee</div>' }
 		const About = { template: '<div>Ini About</div>' }
@@ -213,11 +230,7 @@
 				kelas: []
 			},
 			created(){
-				// localStorage.setItem('kelas', JSON.stringify([
-				// 	{id: '6c5d9563-3a73-43e7-8ce3-c725340ac466', judul: 'Ini judul PHP', deskripsi: 'Ini deskripsi PHP', gambar: 'vue.png'}
-				// 	])
-				// )
-				this.kelas = JSON.parse(localStorage.getItem('kelas')) || []
+				refKelas.on('value', this.resultData, this.errorData)
 			},
 			// beforeCreate(){
 			// 	console.log('before-create')
@@ -250,6 +263,15 @@
 						text: "Berhasil menambah data kelas " + data.judul,
 						icon: "success"
 					});
+				},
+				resultData(items){
+					items.forEach( (item) => {
+						console.log(item.val())
+						this.kelas.push(item.val())
+					} )
+				},
+				errorData(err){
+					console.log(err)
 				}
 			},
 			computed: {
