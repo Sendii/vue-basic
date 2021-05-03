@@ -81,10 +81,11 @@
 			},
 			methods: {
 				filterKelasById() {
-					let kelas = JSON.parse(localStorage.getItem('kelas'))
 					let id = this.$route.params.id_kelas
-					let item = kelas.filter(k => k.id == id)
-					this.detail_kelas = item[0]
+					let refKelasDetail = db.ref('kelas/'+id)
+					refKelasDetail.on('value', (item) => {
+						this.detail_kelas = item.val()
+					})
 				}
 			}
 		}
@@ -232,18 +233,6 @@
 			created(){
 				refKelas.on('value', this.resultData, this.errorData)
 			},
-			// beforeCreate(){
-			// 	console.log('before-create')
-			// },
-			// mounted(){
-			// 	console.log('mounte')
-			// },
-			// beforeUpdate(){
-			// 	console.log('before-update')
-			// },
-			// updated(){
-			// 	console.log('Updated')
-			// },
 			methods: {
 				hapusKelas: function(id){
 					db.ref('kelas/'+id).remove()
